@@ -16,4 +16,5 @@ func InitAPIRoutes(router *gin.RouterGroup) {
 	router.GET("/work", controllers.GetWorkExperience)
 	//mutate
 	router.PUT("/about", controllers.MutateAbout)
+	router.PUT("/work-project/:doc", controllers.MutateProjectsOrWork)
 }
