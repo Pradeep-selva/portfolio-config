@@ -28,3 +28,7 @@ func FirebaseInit() {
 		panic(err)
 	}
 }
+
+func GetDoc(document string) (_ *firestore.DocumentSnapshot, err error) {
+	return Client.Collection("configs").Doc(document).Get(Ctx)
+}
