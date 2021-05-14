@@ -18,10 +18,7 @@ func GetAboutContent(c *gin.Context){
 	dsnap, err := utils.GetDoc("about")
 
 	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"error": "An error occurred",
-			"statusCode": http.StatusInternalServerError,
-		})
+		utils.SendError(c)
 		return
 	}
 
@@ -35,10 +32,7 @@ func GetProjects(c *gin.Context){
 	dsnap, err := utils.GetDoc("projects")
 
 	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"error":"An error occurred",
-			"statusCode": http.StatusInternalServerError,
-		})
+		utils.SendError(c)
 		return
 	}
 
@@ -52,10 +46,7 @@ func GetWorkExperience(c *gin.Context){
 	dsnap, err := utils.GetDoc("work")
 
 	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"error":"An error occurred",
-			"statusCode": http.StatusInternalServerError,
-		})
+		utils.SendError(c)
 		return	
 	}
 

@@ -2,10 +2,12 @@ package utils
 
 import (
 	"context"
+	"net/http"
 	"path/filepath"
 
 	"cloud.google.com/go/firestore"
 	firebase "firebase.google.com/go"
+	"github.com/gin-gonic/gin"
 	"google.golang.org/api/option"
 )
 
@@ -31,4 +33,11 @@ func FirebaseInit() {
 
 func GetDoc(document string) (_ *firestore.DocumentSnapshot, err error) {
 	return Client.Collection("configs").Doc(document).Get(Ctx)
+}
+
+func SendError(c *gin.Context){
+	c.JSON(http.StatusOK, gin.H{
+			"error": "An error occurred",
+			"statusCode": http.StatusInternalServerError,
+	})
 }
