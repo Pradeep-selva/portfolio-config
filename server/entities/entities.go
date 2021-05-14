@@ -1,10 +1,10 @@
 package entities
 
 type AboutType struct {
-	description string
-	skills []string
+	Description string
+	Skills []string
 }
 
 type GeneralBody struct {
-	content string
+	Content string
 }

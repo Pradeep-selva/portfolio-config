@@ -10,7 +10,10 @@ func InitHomeRoute(router *gin.Engine){
 }
 
 func InitAPIRoutes(router *gin.RouterGroup) {
+	//fetch
 	router.GET("/about", controllers.GetAboutContent)
 	router.GET("/projects", controllers.GetProjects)
 	router.GET("/work", controllers.GetWorkExperience)
+	//mutate
+	router.PUT("/about", controllers.MutateAbout)
 }

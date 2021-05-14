@@ -31,6 +31,10 @@ func FirebaseInit() {
 	}
 }
 
+func GetDocRef(document string) *firestore.DocumentRef {
+	return Client.Collection("configs").Doc(document)
+}
+
 func GetDoc(document string) (_ *firestore.DocumentSnapshot, err error) {
 	return Client.Collection("configs").Doc(document).Get(Ctx)
 }
