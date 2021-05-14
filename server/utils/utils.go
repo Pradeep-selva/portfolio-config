@@ -3,11 +3,13 @@ package utils
 import (
 	"context"
 	"net/http"
+	"os"
 	"path/filepath"
 
 	"cloud.google.com/go/firestore"
 	firebase "firebase.google.com/go"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"google.golang.org/api/option"
 )
 
@@ -44,4 +46,16 @@ func SendError(c *gin.Context){
 			"error": "An error occurred",
 			"statusCode": http.StatusInternalServerError,
 	})
+}
+
+func GetEnvVar(key string) string {
+	return os.Getenv(key)
+}
+
+func LoadDotEnv() {
+	err := godotenv.Load(".env")
+
+	if err != nil {
+		panic(err)
+	}
 }
