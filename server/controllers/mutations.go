@@ -13,7 +13,10 @@ func MutateAbout(c *gin.Context) {
 	var about entities.AboutType
 	c.ShouldBindBodyWith(&about, binding.JSON)
 
-	_, err := utils.GetDocRef("about").Set(utils.Ctx,about)
+	_, err := utils.GetDocRef("about").Set(utils.Ctx, map[string]interface{}{
+		"description": about.Description,
+		"skills": about.Skills,
+	})
 	if err != nil {
 		utils.SendError(c)
 		return
