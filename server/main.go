@@ -7,6 +7,8 @@ import (
 	utils "github.com/pradeep-selva/pradeep-selva-admin/server/utils"
 )
 
+var PORT string
+
 func main(){
 	utils.LoadDotEnv()
 
@@ -21,6 +23,9 @@ func main(){
 	routes.InitHomeRoute(router)
 	routes.InitAPIRoutes(apiRouter)
 
-	PORT := "8080"
+	PORT = utils.GetEnvVar("PORT")
+	if PORT == "" {
+		PORT = "8080"
+	}
 	router.Run(":"+PORT)
 }
