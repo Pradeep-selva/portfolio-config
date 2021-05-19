@@ -1,8 +1,24 @@
-import { Box, Heading, TextInput } from "grommet";
+import { Box, Heading, Keyboard, Text, TextInput } from "grommet";
 import { UserAdmin } from "grommet-icons";
-import React from "react";
+import { styles } from "./styles";
+import React, { useState } from "react";
 
 const Login = () => {
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+    setPassword(event.target.value);
+
+  const handleSubmit = () => {
+    if (password === process.env.REACT_APP_PASSWORD) {
+      localStorage.setItem("isAdmin", "1");
+      setError(false);
+    } else {
+      setError(true);
+    }
+  };
+
   return (
     <Box
       direction={"column"}
@@ -14,16 +30,23 @@ const Login = () => {
         <UserAdmin style={{ marginRight: "2rem" }} size={"50px"} />
         <Heading>Login</Heading>
       </Box>
-      <TextInput
-        style={{
-          maxWidth: 700,
-          textAlign: "center",
-          borderRadius: 100,
-          fontSize: "3vw",
-          border: 0,
-          boxShadow: "1px 4px 74px -16px rgba(0,0,0,0.62)"
-        }}
-      />
+      <Keyboard onEnter={handleSubmit}>
+        <TextInput
+          onChange={handleChange}
+          value={password}
+          style={{ ...styles.shadowedInput, textAlign: "center" }}
+          type={"password"}
+        />
+      </Keyboard>
+      {!!error && (
+        <Text
+          size={"large"}
+          color={"status-critical"}
+          margin={{ vertical: "medium" }}
+        >
+          Wrong credentials
+        </Text>
+      )}
     </Box>
   );
 };
