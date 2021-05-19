@@ -2,6 +2,7 @@ import { Box, Heading, Keyboard, Text, TextInput } from "grommet";
 import { UserAdmin } from "grommet-icons";
 import { styles } from "./styles";
 import React, { useState } from "react";
+import { AuthTypes, RouteAuthKey } from "../../Configs";
 
 const Login = () => {
   const [password, setPassword] = useState("");
@@ -12,7 +13,7 @@ const Login = () => {
 
   const handleSubmit = () => {
     if (password === process.env.REACT_APP_PASSWORD) {
-      localStorage.setItem("isAdmin", "1");
+      localStorage.setItem(RouteAuthKey, AuthTypes.authorized);
       setError(false);
     } else {
       setError(true);

@@ -1,13 +1,16 @@
 import React from "react";
-import "./index.css";
 import theme from "./theme";
-import { Login } from "../Pages";
+import { BrowserRouter as Router } from "react-router-dom";
+import { Routes } from "../Routes";
 import { Grommet } from "grommet";
+import "./index.css";
 
 const App = () => {
   return (
     <Grommet className='App' theme={theme}>
-      <Login />
+      <Router>
+        <Routes />
+      </Router>
     </Grommet>
   );
 };
