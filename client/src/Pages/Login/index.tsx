@@ -2,19 +2,23 @@ import { Box, Heading, Keyboard, Text, TextInput } from "grommet";
 import { UserAdmin } from "grommet-icons";
 import { styles } from "./styles";
 import React, { useState } from "react";
-import { AuthTypes, RouteAuthKey } from "../../Configs";
+import { AuthTypes, isLoggedIn, RouteAuthKey, RouteNames } from "../../Configs";
+import { useHistory } from "react-router";
 
 const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
+  const history = useHistory();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setPassword(event.target.value);
 
   const handleSubmit = () => {
+    setPassword("");
     if (password === process.env.REACT_APP_PASSWORD) {
       localStorage.setItem(RouteAuthKey, AuthTypes.authorized);
       setError(false);
+      history.push(RouteNames.home);
     } else {
       setError(true);
     }
@@ -31,14 +35,20 @@ const Login = () => {
         <UserAdmin style={{ marginRight: "2rem" }} size={"50px"} />
         <Heading>Login</Heading>
       </Box>
-      <Keyboard onEnter={handleSubmit}>
-        <TextInput
-          onChange={handleChange}
-          value={password}
-          style={{ ...styles.shadowedInput, textAlign: "center" }}
-          type={"password"}
-        />
-      </Keyboard>
+      {isLoggedIn ? (
+        <Text size={"larger"} margin={{ vertical: "medium" }}>
+          You are already authenticated!
+        </Text>
+      ) : (
+        <Keyboard onEnter={handleSubmit}>
+          <TextInput
+            onChange={handleChange}
+            value={password}
+            style={{ ...styles.shadowedInput, textAlign: "center" }}
+            type={"password"}
+          />
+        </Keyboard>
+      )}
       {!!error && (
         <Text
           size={"large"}
