@@ -2,6 +2,7 @@ import { Box, Heading, Keyboard, Text, TextInput } from "grommet";
 import { UserAdmin } from "grommet-icons";
 import { styles } from "./styles";
 import React, { useState } from "react";
+import { Logout } from "../../Components";
 import { AuthTypes, isLoggedIn, RouteAuthKey, RouteNames } from "../../Configs";
 import { useHistory } from "react-router";
 
@@ -16,9 +17,9 @@ const Login = () => {
   const handleSubmit = () => {
     setPassword("");
     if (password === process.env.REACT_APP_PASSWORD) {
+      history.push(RouteNames.home);
       localStorage.setItem(RouteAuthKey, AuthTypes.authorized);
       setError(false);
-      history.push(RouteNames.home);
     } else {
       setError(true);
     }
@@ -36,9 +37,7 @@ const Login = () => {
         <Heading>Login</Heading>
       </Box>
       {isLoggedIn ? (
-        <Text size={"larger"} margin={{ vertical: "medium" }}>
-          You are already authenticated!
-        </Text>
+        <Logout />
       ) : (
         <Keyboard onEnter={handleSubmit}>
           <TextInput
