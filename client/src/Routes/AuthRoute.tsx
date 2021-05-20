@@ -1,12 +1,14 @@
 import React from "react";
 import { Redirect, Route } from "react-router";
-import { isLoggedIn, RouteNames } from "../Configs";
+import { AuthTypes, RouteAuthKey, RouteNames } from "../Configs";
 
 const AuthRoute = ({ component: Component, inverse, ...rest }: any) => (
   <Route
     {...rest}
     render={(props: any) =>
-      !isLoggedIn ? (
+      !parseInt(
+        localStorage.getItem(RouteAuthKey) || AuthTypes.unauthorized
+      ) ? (
         <Redirect to={RouteNames.login} />
       ) : (
         <Component {...props} />

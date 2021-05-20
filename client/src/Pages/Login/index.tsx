@@ -17,9 +17,9 @@ const Login = () => {
   const handleSubmit = () => {
     setPassword("");
     if (password === process.env.REACT_APP_PASSWORD) {
-      history.push(RouteNames.home);
       localStorage.setItem(RouteAuthKey, AuthTypes.authorized);
       setError(false);
+      history.push(RouteNames.home);
     } else {
       setError(true);
     }

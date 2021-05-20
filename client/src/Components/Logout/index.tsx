@@ -15,7 +15,7 @@ const Logout = () => {
   return (
     <Box align={"center"} justify={"center"}>
       <Text size={"larger"} margin={{ vertical: "medium" }}>
-        You are already authenticated!
+        You are authenticated!
       </Text>
       <Button
         primary
