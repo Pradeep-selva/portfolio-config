@@ -20,6 +20,7 @@ const Login = () => {
       localStorage.setItem(RouteAuthKey, AuthTypes.authorized);
       setError(false);
       history.push(RouteNames.home);
+      history.go(0);
     } else {
       setError(true);
     }
