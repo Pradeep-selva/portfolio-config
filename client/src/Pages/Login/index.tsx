@@ -36,7 +36,7 @@ const Login = () => {
         <UserAdmin style={{ marginRight: "2rem" }} size={"50px"} />
         <Heading>Login</Heading>
       </Box>
-      {isLoggedIn ? (
+      {isLoggedIn() ? (
         <Logout />
       ) : (
         <Keyboard onEnter={handleSubmit}>

@@ -5,6 +5,5 @@ export const AuthTypes = {
   unauthorized: "0"
 };
 
-export const isLoggedIn = !!parseInt(
-  localStorage.getItem(RouteAuthKey) || AuthTypes.unauthorized
-);
+export const isLoggedIn = () =>
+  !!parseInt(localStorage.getItem(RouteAuthKey) || AuthTypes.unauthorized);
