@@ -8,7 +8,7 @@ import {
   TextArea,
   TextInput
 } from "grommet";
-import { getAboutContent, getProjects, updateAboutContent } from "../../Api";
+import { updateProjectContent, getProjects } from "../../Api";
 import { IProject, STATUS_SUCCESS } from "../../Configs";
 
 interface IState {
@@ -58,24 +58,22 @@ class Projects extends Component<any, IState> {
     this.setState({ projects });
   };
 
-  //   handleUpdate = () => {
-  //     const payload = {
-  //       description: this.state.description,
-  //       skills: this.state.skills
-  //     };
+  handleUpdate = () => {
+    this.toggleLoading();
 
-  //     this.toggleLoading();
+    updateProjectContent(this.state.projects)
+      .then(({ statusCode }) => {
+        if (statusCode === STATUS_SUCCESS) {
+          this.openToast();
+          setTimeout(() => this.closeToast(), 1000);
+        }
+      })
+      .catch(console.log)
+      .finally(() => this.toggleLoading());
+  };
 
-  //     updateAboutContent(payload)
-  //       .then(({ statusCode }) => {
-  //         if (statusCode === STATUS_SUCCESS) {
-  //           this.openToast();
-  //           setTimeout(() => this.closeToast(), 1000);
-  //         }
-  //       })
-  //       .catch(console.log)
-  //       .finally(() => this.toggleLoading());
-  //   };
+  getIndex = (segment: number, project: number) =>
+    segment ? 3 + project : project;
 
   openToast = () => this.setState({ showToast: true });
 
@@ -87,7 +85,7 @@ class Projects extends Component<any, IState> {
     }));
 
   render() {
-    const { loading, projects } = this.state;
+    const { loading, projects, showToast } = this.state;
 
     return (
       <Box
@@ -100,59 +98,81 @@ class Projects extends Component<any, IState> {
           <Spinner size={"xlarge"} color={"#005555"} />
         ) : (
           <React.Fragment>
-            {[projects.slice(0, 3), projects.slice(3, 6)].map((segment) => (
-              <Box direction={"row"}>
-                {segment.map(
-                  ({ description, repoLink, thumbnail, title }, index) => (
-                    <Box
-                      direction={"column"}
-                      style={{
-                        margin: "1rem 1rem",
-                        width: "30vw"
-                      }}
-                    >
+            {[projects.slice(0, 3), projects.slice(3, 6)].map(
+              (segment, segmentIndex) => (
+                <Box direction={"row"} key={segmentIndex}>
+                  {segment.map(
+                    (
+                      { description, repoLink, thumbnail, title },
+                      projectIndex
+                    ) => (
                       <Box
+                        key={projectIndex}
+                        direction={"column"}
                         style={{
-                          width: "100%",
-                          height: "25vh",
-                          background: `url(${thumbnail})`,
-                          backgroundPosition: "center",
-                          backgroundSize: "cover"
+                          margin: "1rem 1rem",
+                          width: "30vw"
                         }}
-                      />
-                      <TextInput
-                        placeholder={"Title"}
-                        value={title}
-                        onChange={(event) =>
-                          this.handleChangeByKey(event, index, "title")
-                        }
-                      />
-                      <TextInput
-                        placeholder={"Thumbnail"}
-                        value={thumbnail}
-                        onChange={(event) =>
-                          this.handleChangeByKey(event, index, "thumbnail")
-                        }
-                      />
-                      <TextInput
-                        placeholder={"Repo Link"}
-                        value={repoLink}
-                        onChange={(event) =>
-                          this.handleChangeByKey(event, index, "repoLink")
-                        }
-                      />
-                      <TextArea
-                        style={{ height: "5rem" }}
-                        value={description}
-                        onChange={(event) =>
-                          this.handleChangeByKey(event, index, "description")
-                        }
-                      />
-                    </Box>
-                  )
-                )}
-              </Box>
-            ))}
+                      >
+                        <Box
+                          style={{
+                            width: "100%",
+                            height: "25vh",
+                            background: `url(${thumbnail})`,
+                            backgroundPosition: "center",
+                            backgroundSize: "cover"
+                          }}
+                        />
+                        <TextInput
+                          placeholder={"Title"}
+                          value={title}
+                          onChange={(event) =>
+                            this.handleChangeByKey(
+                              event,
+                              this.getIndex(segmentIndex, projectIndex),
+                              "title"
+                            )
+                          }
+                        />
+                        <TextInput
+                          placeholder={"Thumbnail"}
+                          value={thumbnail}
+                          onChange={(event) =>
+                            this.handleChangeByKey(
+                              event,
+                              this.getIndex(segmentIndex, projectIndex),
+                              "thumbnail"
+                            )
+                          }
+                        />
+                        <TextInput
+                          placeholder={"Repo Link"}
+                          value={repoLink}
+                          onChange={(event) =>
+                            this.handleChangeByKey(
+                              event,
+                              this.getIndex(segmentIndex, projectIndex),
+                              "repoLink"
+                            )
+                          }
+                        />
+                        <TextArea
+                          style={{ height: "5rem" }}
+                          value={description}
+                          onChange={(event) =>
+                            this.handleChangeByKey(
+                              event,
+                              this.getIndex(segmentIndex, projectIndex),
+                              "description"
+                            )
+                          }
+                        />
+                      </Box>
+                    )
+                  )}
+                </Box>
+              )
+            )}
             <Button
               primary
               margin={{ vertical: "medium" }}
@@ -162,9 +182,18 @@ class Projects extends Component<any, IState> {
                 backgroundColor: "#005555",
                 border: 0
               }}
-              //   onClick={this.handleUpdate}
+              onClick={this.handleUpdate}
             />
           </React.Fragment>
+        )}
+        {showToast && (
+          <Layer
+            onEsc={this.closeToast}
+            onClickOutside={this.closeToast}
+            style={{ padding: "2rem" }}
+          >
+            <Text size={"large"}>Successfully updated!</Text>
+          </Layer>
         )}
       </Box>
     );
