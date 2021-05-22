@@ -1,7 +1,7 @@
 import { Box, Text } from "grommet";
 import React from "react";
 
-const Home = () => {
+const Experience = () => {
   return (
     <Box
       direction={"row"}
@@ -10,10 +10,10 @@ const Home = () => {
       style={{ height: "100%" }}
     >
       <Text textAlign={"center"} size={"3xl"}>
-        Pradeep selva admin
+        **In Progress**
       </Text>
     </Box>
   );
 };
 
-export default Home;
+export default Experience;

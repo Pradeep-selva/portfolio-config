@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { RouteNames } from "../Configs";
-import { About, Home, Login, Projects } from "../Pages";
+import { About, Experience, Home, Login, Projects } from "../Pages";
 import AuthRoute from "./AuthRoute";
 
 export const Routes = () => (
@@ -10,5 +10,6 @@ export const Routes = () => (
     <AuthRoute exact path={RouteNames.home} component={Home} />
     <AuthRoute exact path={RouteNames.about} component={About} />
     <AuthRoute exact path={RouteNames.projects} component={Projects} />
+    <AuthRoute exact path={RouteNames.experience} component={Experience} />
   </Switch>
 );
