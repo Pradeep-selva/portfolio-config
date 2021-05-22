@@ -1,15 +1,8 @@
 import React, { Component } from "react";
-import {
-  Box,
-  Button,
-  Layer,
-  Spinner,
-  Text,
-  TextArea,
-  TextInput
-} from "grommet";
+import { Box, Button, Layer, Spinner, Text } from "grommet";
 import { updateProjectContent, getProjects } from "../../Api";
 import { IProject, STATUS_SUCCESS } from "../../Configs";
+import { ProjectForm } from "../../Components";
 
 interface IState {
   projects: Array<IProject>;
@@ -72,9 +65,6 @@ class Projects extends Component<any, IState> {
       .finally(() => this.toggleLoading());
   };
 
-  getIndex = (segment: number, project: number) =>
-    segment ? 3 + project : project;
-
   openToast = () => this.setState({ showToast: true });
 
   closeToast = () => this.setState({ showToast: false });
@@ -106,68 +96,16 @@ class Projects extends Component<any, IState> {
                       { description, repoLink, thumbnail, title },
                       projectIndex
                     ) => (
-                      <Box
+                      <ProjectForm
                         key={projectIndex}
-                        direction={"column"}
-                        style={{
-                          margin: "1rem 1rem",
-                          width: "30vw"
-                        }}
-                      >
-                        <Box
-                          style={{
-                            width: "100%",
-                            height: "25vh",
-                            background: `url(${thumbnail})`,
-                            backgroundPosition: "center",
-                            backgroundSize: "cover"
-                          }}
-                        />
-                        <TextInput
-                          placeholder={"Title"}
-                          value={title}
-                          onChange={(event) =>
-                            this.handleChangeByKey(
-                              event,
-                              this.getIndex(segmentIndex, projectIndex),
-                              "title"
-                            )
-                          }
-                        />
-                        <TextInput
-                          placeholder={"Thumbnail"}
-                          value={thumbnail}
-                          onChange={(event) =>
-                            this.handleChangeByKey(
-                              event,
-                              this.getIndex(segmentIndex, projectIndex),
-                              "thumbnail"
-                            )
-                          }
-                        />
-                        <TextInput
-                          placeholder={"Repo Link"}
-                          value={repoLink}
-                          onChange={(event) =>
-                            this.handleChangeByKey(
-                              event,
-                              this.getIndex(segmentIndex, projectIndex),
-                              "repoLink"
-                            )
-                          }
-                        />
-                        <TextArea
-                          style={{ height: "5rem" }}
-                          value={description}
-                          onChange={(event) =>
-                            this.handleChangeByKey(
-                              event,
-                              this.getIndex(segmentIndex, projectIndex),
-                              "description"
-                            )
-                          }
-                        />
-                      </Box>
+                        description={description}
+                        repoLink={repoLink}
+                        thumbnail={thumbnail}
+                        title={title}
+                        projectIndex={projectIndex}
+                        segmentIndex={segmentIndex}
+                        handleChangeByKey={this.handleChangeByKey}
+                      />
                     )
                   )}
                 </Box>
