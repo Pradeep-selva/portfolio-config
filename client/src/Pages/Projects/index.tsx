@@ -1,35 +1,44 @@
 import React, { Component } from "react";
-import { Box, Button, Layer, Spinner, Text, TextArea } from "grommet";
+import {
+  Box,
+  Button,
+  Layer,
+  Spinner,
+  Text,
+  TextArea,
+  TextInput
+} from "grommet";
 import { getAboutContent, getProjects, updateAboutContent } from "../../Api";
-import { STATUS_SUCCESS } from "../../Configs";
+import { IProject, STATUS_SUCCESS } from "../../Configs";
 
-// interface IState {
-//   description: string;
-//   skills: Array<string>;
-//   loading: boolean;
-//   showToast: boolean;
-// }
+interface IState {
+  projects: Array<IProject>;
+  loading: boolean;
+  showToast: boolean;
+}
 
-class Projects extends Component {
-  //   constructor(props: any) {
-  //     super(props);
+class Projects extends Component<any, IState> {
+  constructor(props: any) {
+    super(props);
 
-  //     this.state = {
-  //       description: "",
-  //       skills: [],
-  //       loading: false,
-  //       showToast: false
-  //     };
-  //   }
+    this.state = {
+      projects: [],
+      loading: false,
+      showToast: false
+    };
+  }
 
   componentDidMount() {
-    // this.toggleLoading();
+    this.toggleLoading();
     getProjects()
       .then(({ data: { content }, statusCode }) => {
-        if (statusCode === STATUS_SUCCESS) console.log(JSON.parse(content));
+        if (statusCode === STATUS_SUCCESS)
+          this.setState({
+            projects: JSON.parse(content)
+          });
       })
-      .catch(console.log);
-    //   .finally(() => this.toggleLoading());
+      .catch(console.log)
+      .finally(() => this.toggleLoading());
   }
 
   //   handleUpdate = () => {
@@ -51,16 +60,17 @@ class Projects extends Component {
   //       .finally(() => this.toggleLoading());
   //   };
 
-  //   openToast = () => this.setState({ showToast: true });
+  openToast = () => this.setState({ showToast: true });
 
-  //   closeToast = () => this.setState({ showToast: false });
+  closeToast = () => this.setState({ showToast: false });
 
-  //   toggleLoading = () =>
-  //     this.setState((prevState: IState) => ({
-  //       loading: !prevState.loading
-  //     }));
+  toggleLoading = () =>
+    this.setState((prevState: IState) => ({
+      loading: !prevState.loading
+    }));
 
   render() {
+    const { loading, projects } = this.state;
     return (
       <Box
         direction={"column"}
@@ -68,7 +78,48 @@ class Projects extends Component {
         justify={"center"}
         style={{ height: "100%" }}
       >
-        <h1>ok</h1>
+        {loading ? (
+          <Spinner size={"xlarge"} color={"#005555"} />
+        ) : (
+          [projects.slice(0, 3), projects.slice(3, 6)].map((segment) => (
+            <Box direction={"row"}>
+              {segment.map(({ description, repoLink, thumbnail, title }) => (
+                <Box
+                  direction={"column"}
+                  style={{
+                    margin: "1rem 1rem",
+                    width: "30vw"
+                  }}
+                >
+                  <Box
+                    style={{
+                      width: "100%",
+                      height: "25vh",
+                      background: `url(${thumbnail})`,
+                      backgroundPosition: "center",
+                      backgroundSize: "cover"
+                    }}
+                  />
+                  <TextInput placeholder={"Title"} value={title} />
+                  <TextInput placeholder={"Thumbnail"} value={thumbnail} />
+                  <TextInput placeholder={"Repo Link"} value={repoLink} />
+                  <TextArea style={{ height: "5rem" }} value={description} />
+                </Box>
+              ))}
+            </Box>
+          ))
+        )}
+        <Button
+          primary
+          margin={{ vertical: "medium" }}
+          label={"update"}
+          style={{
+            maxWidth: "20%",
+            backgroundColor: "#005555",
+            border: 0
+          }}
+          //   onClick={this.handleUpdate}
+        />
       </Box>
     );
   }

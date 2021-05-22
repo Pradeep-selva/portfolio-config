@@ -9,7 +9,11 @@ const SideNav = () => {
 
   return (
     <Sidebar
-      style={{ height: "100vh", backgroundColor: "#005555" }}
+      style={{
+        maxHeight: "110vh",
+        minHeight: "100vh",
+        backgroundColor: "#005555"
+      }}
       background='brand'
       round='small'
       footer={<NavLogout />}
