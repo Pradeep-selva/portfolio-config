@@ -41,6 +41,23 @@ class Projects extends Component<any, IState> {
       .finally(() => this.toggleLoading());
   }
 
+  handleChangeByKey = (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
+    index: number,
+    key: keyof IProject
+  ) => {
+    const projects = this.state.projects;
+
+    projects[index] = {
+      ...projects[index],
+      [key]: event.target.value
+    };
+
+    this.setState({ projects });
+  };
+
   //   handleUpdate = () => {
   //     const payload = {
   //       description: this.state.description,
@@ -71,6 +88,7 @@ class Projects extends Component<any, IState> {
 
   render() {
     const { loading, projects } = this.state;
+
     return (
       <Box
         direction={"column"}
@@ -81,45 +99,73 @@ class Projects extends Component<any, IState> {
         {loading ? (
           <Spinner size={"xlarge"} color={"#005555"} />
         ) : (
-          [projects.slice(0, 3), projects.slice(3, 6)].map((segment) => (
-            <Box direction={"row"}>
-              {segment.map(({ description, repoLink, thumbnail, title }) => (
-                <Box
-                  direction={"column"}
-                  style={{
-                    margin: "1rem 1rem",
-                    width: "30vw"
-                  }}
-                >
-                  <Box
-                    style={{
-                      width: "100%",
-                      height: "25vh",
-                      background: `url(${thumbnail})`,
-                      backgroundPosition: "center",
-                      backgroundSize: "cover"
-                    }}
-                  />
-                  <TextInput placeholder={"Title"} value={title} />
-                  <TextInput placeholder={"Thumbnail"} value={thumbnail} />
-                  <TextInput placeholder={"Repo Link"} value={repoLink} />
-                  <TextArea style={{ height: "5rem" }} value={description} />
-                </Box>
-              ))}
-            </Box>
-          ))
+          <React.Fragment>
+            {[projects.slice(0, 3), projects.slice(3, 6)].map((segment) => (
+              <Box direction={"row"}>
+                {segment.map(
+                  ({ description, repoLink, thumbnail, title }, index) => (
+                    <Box
+                      direction={"column"}
+                      style={{
+                        margin: "1rem 1rem",
+                        width: "30vw"
+                      }}
+                    >
+                      <Box
+                        style={{
+                          width: "100%",
+                          height: "25vh",
+                          background: `url(${thumbnail})`,
+                          backgroundPosition: "center",
+                          backgroundSize: "cover"
+                        }}
+                      />
+                      <TextInput
+                        placeholder={"Title"}
+                        value={title}
+                        onChange={(event) =>
+                          this.handleChangeByKey(event, index, "title")
+                        }
+                      />
+                      <TextInput
+                        placeholder={"Thumbnail"}
+                        value={thumbnail}
+                        onChange={(event) =>
+                          this.handleChangeByKey(event, index, "thumbnail")
+                        }
+                      />
+                      <TextInput
+                        placeholder={"Repo Link"}
+                        value={repoLink}
+                        onChange={(event) =>
+                          this.handleChangeByKey(event, index, "repoLink")
+                        }
+                      />
+                      <TextArea
+                        style={{ height: "5rem" }}
+                        value={description}
+                        onChange={(event) =>
+                          this.handleChangeByKey(event, index, "description")
+                        }
+                      />
+                    </Box>
+                  )
+                )}
+              </Box>
+            ))}
+            <Button
+              primary
+              margin={{ vertical: "medium" }}
+              label={"update"}
+              style={{
+                maxWidth: "20%",
+                backgroundColor: "#005555",
+                border: 0
+              }}
+              //   onClick={this.handleUpdate}
+            />
+          </React.Fragment>
         )}
-        <Button
-          primary
-          margin={{ vertical: "medium" }}
-          label={"update"}
-          style={{
-            maxWidth: "20%",
-            backgroundColor: "#005555",
-            border: 0
-          }}
-          //   onClick={this.handleUpdate}
-        />
       </Box>
     );
   }
