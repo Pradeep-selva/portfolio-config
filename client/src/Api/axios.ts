@@ -1,5 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../Configs";
+import { secrets } from "../secrets";
 
 const API_URL = `${BASE_URL}/api`;
 
@@ -9,7 +10,7 @@ const getInstance = (baseURL = API_URL) => {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       accept: "application/json",
-      "x-api-key": `${process.env.REACT_APP_X_API_KEY}`
+      "x-api-key": secrets.xApiKey
     }
   });
 };

@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { Logout } from "../../Components";
 import { AuthTypes, isLoggedIn, RouteAuthKey, RouteNames } from "../../Configs";
 import { useHistory } from "react-router";
+import { secrets } from "../../secrets";
 
 const Login = () => {
   const [password, setPassword] = useState("");
@@ -16,7 +17,7 @@ const Login = () => {
 
   const handleSubmit = () => {
     setPassword("");
-    if (password === process.env.REACT_APP_PASSWORD) {
+    if (password === secrets.password) {
       localStorage.setItem(RouteAuthKey, AuthTypes.authorized);
       setError(false);
       history.push(RouteNames.home);

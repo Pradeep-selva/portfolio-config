@@ -12,7 +12,7 @@ class About extends Component<IState, any> {
     super(props);
 
     this.state = {
-      about: "",
+      description: "",
       skills: []
     };
   }
@@ -31,7 +31,7 @@ class About extends Component<IState, any> {
         style={{ height: "100%" }}
       >
         <Text size={"xlarge"} margin={{ vertical: "small" }}>
-          About
+          Description
         </Text>
         <TextArea
           style={{ maxWidth: "40%", height: "5rem" }}
