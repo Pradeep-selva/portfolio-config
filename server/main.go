@@ -16,6 +16,7 @@ func main(){
 	defer utils.Client.Close()
 
 	router := gin.Default()
+	router.Use(middleware.CORSMiddleware())
 	router.Use(middleware.CheckApiAuthorization)
 	
 	apiRouter := router.Group("/api/")

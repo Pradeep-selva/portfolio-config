@@ -1,5 +1,6 @@
-import { Box, Button, Text, TextArea } from "grommet";
 import React, { Component } from "react";
+import { Box, Button, Text, TextArea } from "grommet";
+import { getAboutContent } from "../../Api";
 
 interface IState {
   about: string;
@@ -14,6 +15,10 @@ class About extends Component<IState, any> {
       about: "",
       skills: []
     };
+  }
+
+  componentDidMount() {
+    getAboutContent().then(console.log).catch(console.log);
   }
 
   render() {
