@@ -4,9 +4,9 @@ import { secrets } from "../secrets";
 
 const API_URL = `${BASE_URL}/api`;
 
-const getInstance = (baseURL = API_URL) => {
+const getInstance = () => {
   return axios.create({
-    baseURL,
+    baseURL: API_URL,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       accept: "application/json",

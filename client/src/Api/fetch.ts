@@ -6,10 +6,7 @@ export const getAboutContent = () =>
     .get(ApiEndpoints.about)
     .then((response) => response.data);
 
-export const updateAboutContent = (payload: {
-  description: string;
-  skills: Array<string>;
-}) =>
+export const getProjects = () =>
   Axios.getInstance()
-    .put(ApiEndpoints.about, payload)
+    .get(ApiEndpoints.projects)
     .then((response) => response.data);

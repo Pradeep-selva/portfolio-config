@@ -6,5 +6,10 @@ export const ApiEndpoints = {
   about: "/about",
   projects: "/projects",
   work: "/work",
-  workExp: "/work-exp"
+  workProjects: "/work-project"
+};
+
+export const UpdateTypes = {
+  work: "work",
+  projects: "projects"
 };
