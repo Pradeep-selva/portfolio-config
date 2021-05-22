@@ -1,10 +1,7 @@
-import { ApiEndpoints } from "../Configs";
+import { ApiEndpoints, IAbout } from "../Configs";
 import Axios from "./axios";
 
-export const updateAboutContent = (payload: {
-  description: string;
-  skills: Array<string>;
-}) =>
+export const updateAboutContent = (payload: IAbout) =>
   Axios.getInstance()
     .put(ApiEndpoints.about, payload)
     .then((response) => response.data);
