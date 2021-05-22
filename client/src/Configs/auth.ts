@@ -1,4 +1,4 @@
-export const RouteAuthKey = "isAdmin";
+import { secrets } from "../secrets";
 
 export const AuthTypes = {
   authorized: "1",
@@ -6,4 +6,4 @@ export const AuthTypes = {
 };
 
 export const isLoggedIn = () =>
-  !!parseInt(localStorage.getItem(RouteAuthKey) || AuthTypes.unauthorized);
+  !!parseInt(localStorage.getItem(secrets.authKey) || AuthTypes.unauthorized);

@@ -1,13 +1,14 @@
 import React from "react";
 import { Box, Button, Text } from "grommet";
 import { useHistory } from "react-router";
-import { RouteAuthKey, RouteNames } from "../../Configs";
+import { RouteNames } from "../../Configs";
+import { secrets } from "../../secrets";
 
 const Logout = () => {
   const history = useHistory();
 
   const handleLogout = () => {
-    localStorage.removeItem(RouteAuthKey);
+    localStorage.removeItem(secrets.authKey);
     history.push(RouteNames.login);
     history.go(0);
   };

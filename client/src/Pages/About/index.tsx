@@ -66,7 +66,7 @@ class About extends Component<any, IState> {
 
   render() {
     const { description, skills, loading, showToast } = this.state;
-    console.log(skills);
+
     return (
       <Box
         direction={"column"}

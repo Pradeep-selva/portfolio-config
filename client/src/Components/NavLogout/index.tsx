@@ -2,14 +2,14 @@ import { Button, Layer } from "grommet";
 import { Logout } from "grommet-icons";
 import React from "react";
 import { useHistory } from "react-router";
-import { RouteAuthKey } from "../../Configs";
+import { secrets } from "../../secrets";
 
 const NavLogout = () => {
   const history = useHistory();
   const [show, setShow] = React.useState(false);
 
   const handleLogout = () => {
-    localStorage.removeItem(RouteAuthKey);
+    localStorage.removeItem(secrets.authKey);
     history.go(0);
   };
 

@@ -3,7 +3,7 @@ import { UserAdmin } from "grommet-icons";
 import { styles } from "./styles";
 import React, { useState } from "react";
 import { Logout } from "../../Components";
-import { AuthTypes, isLoggedIn, RouteAuthKey, RouteNames } from "../../Configs";
+import { AuthTypes, isLoggedIn, RouteNames } from "../../Configs";
 import { useHistory } from "react-router";
 import { secrets } from "../../secrets";
 
@@ -18,7 +18,7 @@ const Login = () => {
   const handleSubmit = () => {
     setPassword("");
     if (password === secrets.password) {
-      localStorage.setItem(RouteAuthKey, AuthTypes.authorized);
+      localStorage.setItem(secrets.authKey, AuthTypes.authorized);
       setError(false);
       history.push(RouteNames.home);
       history.go(0);
