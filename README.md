@@ -14,3 +14,7 @@ An admin panel to control the contents of [my portfolio](https://pradeep-selva.c
 - Gin
 - Material UI
 - Firestore/Firebase
+
+# License
+
+[MIT](./LICENSE)
